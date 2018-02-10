@@ -1,0 +1,7 @@
+tensorflow
+keras
+numpy
+urllib3
+gensim
+pillow
+regex
