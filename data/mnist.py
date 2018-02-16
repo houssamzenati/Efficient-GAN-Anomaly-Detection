@@ -15,10 +15,6 @@ def get_test(label, centered=False):
     """Get testing dataset for MNIST"""
     return _get_adapted_dataset("test", label, centered=centered)
 
-def get_valid(label, centered=False):
-    """Get validation dataset for MNIST"""
-    return None, None
-
 def get_shape_input():
     """Get shape of the dataset for MNIST"""
     return (None, 28, 28, 1)

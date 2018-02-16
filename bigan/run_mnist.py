@@ -7,7 +7,6 @@ import sys
 import bigan.mnist_utilities as network
 import data.mnist as data
 from utils.evaluations import do_prc, do_roc
-from sklearn.metrics import precision_recall_fscore_support
 
 RANDOM_SEED = 13
 FREQ_PRINT = 20 # print frequency image tensorboard [20]
@@ -331,26 +330,15 @@ def train_and_test(nb_epochs, weight, method, degree, random_seed, label):
 
         scores += batch_score[:size]
 
-        # roc_auc, _ = do_roc(scores, testy,
-        #        file_name='',
-        #        directory='', plot=False)
-        # prc_auc, _, _, _, _ = do_prc(scores, testy,'','', plot=False)
-
-        roc_auc, _ = do_roc(scores, testy,
-               file_name=r'bigan/mnist/{}/{}/{}'.format(method, weight,
-                                                     label),
-               directory=r'results/bigan/mnist/{}/{}/'.format(method,
-                                                           weight))
-        prc_auc, _, _, _, _ = do_prc(scores, testy,
+        prc_auc = do_prc(scores, testy,
                file_name=r'bigan/mnist/{}/{}/{}'.format(method, weight,
                                                      label),
                directory=r'results/bigan/mnist/{}/{}/'.format(method,
                                                            weight))
 
-        print("Testing | ROC AUC = {:.4f} | PRC AUC = {:.4f}".format(roc_auc,
-                                                                     prc_auc))
+        print("Testing | PRC AUC = {:.4f}".format(prc_auc))
 
-def run(nb_epochs, weight, method, degree, label, number_init_z, random_seed=42):
+def run(nb_epochs, weight, method, degree, label, random_seed=42):
     """ Runs the training process"""
     with tf.Graph().as_default():
         # Set the graph level seed

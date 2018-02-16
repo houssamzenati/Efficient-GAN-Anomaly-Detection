@@ -6,7 +6,6 @@ import importlib
 import sys
 import gan.kdd_utilities as network
 import data.kdd as data
-from utils.evaluations import do_prc, do_roc
 from sklearn.metrics import precision_recall_fscore_support
 
 
@@ -264,10 +263,8 @@ def train_and_test(nb_epochs, weight, method, degree, random_seed):
         scores = []
         inference_time = []
 
-        # validation
+        # Testing
         for t in range(nr_batches_test):
-            # print("Validation batch {} is inverted...".format(t))
-            # display_progression_epoch(t, nr_batches_valid)
 
             # construct randomly permuted minibatches
             ran_from = t * batch_size
@@ -320,7 +317,7 @@ def train_and_test(nb_epochs, weight, method, degree, random_seed):
             "Testing : Prec = %.4f | Rec = %.4f | F1 = %.4f "
             % (precision, recall, f1))
 
-def run(nb_epochs, weight, method, degree, label, number_init_z, random_seed=42):
+def run(nb_epochs, weight, method, degree, label, random_seed=42):
     """ Runs the training process"""
     with tf.Graph().as_default():
         # Set the graph level seed

@@ -14,10 +14,6 @@ def get_test(*args):
     """Get testing dataset for KDD 10 percent"""
     return _get_adapted_dataset("test")
 
-def get_valid(*args):
-    """Get validation dataset for KDD 10 percent"""
-    return (None, None)
-
 def get_shape_input():
     """Get shape of the dataset for KDD 10 percent"""
     return (None, 121)

@@ -6,7 +6,6 @@ import importlib
 import sys
 import bigan.kdd_utilities as network
 import data.kdd as data
-from utils.evaluations import do_prc, do_roc
 from sklearn.metrics import precision_recall_fscore_support
 
 RANDOM_SEED = 13
@@ -337,7 +336,7 @@ def train_and_test(nb_epochs, weight, method, degree, random_seed):
             "Testing : Prec = %.4f | Rec = %.4f | F1 = %.4f "
             % (precision, recall, f1))
 
-def run(nb_epochs, weight, method, degree, label, number_init_z, random_seed=42):
+def run(nb_epochs, weight, method, degree, label, random_seed=42):
     """ Runs the training process"""
     with tf.Graph().as_default():
         # Set the graph level seed

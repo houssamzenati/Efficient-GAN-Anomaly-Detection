@@ -38,14 +38,14 @@ def run(args):
             logger.info("Running script at {}".format(mod_name))
 
             mod = importlib.import_module(mod_name)
-            mod.run(args.nb_epochs, args.w, args.m, args.d, args.label, args.z, args.rd)
+            mod.run(args.nb_epochs, args.w, args.m, args.d, args.label, args.rd)
 
         except Exception as e:
             logger.exception(e)
             logger.error("Uhoh, the script halted with an error.")
     else:
         if not has_effect:
-            logger.error("Script halted without any effect. To run code, use command:\npython3 main.py <example name> {train, test}")
+            logger.error("Script halted without any effect. To run code, use command:\npython3 main.py <example name> {train, test, run}")
 
 def path(d):
     try:
@@ -59,12 +59,11 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Run examples from the DL 2.0 Anomaly Detector.')
     parser.add_argument('example', nargs="?", type=path, help='the folder name of the example you want to run e.g gan or bigan')
     parser.add_argument('dataset', nargs="?", choices=['mnist', 'kdd'], help='the name of the dataset you want to run the experiments on')
-    parser.add_argument('split', nargs="?", choices=['train', 'test', 'run'], help='train the example or evaluate it')
+    parser.add_argument('split', nargs="?", choices=['run'], help='train the example or evaluate it')
     parser.add_argument('--nb_epochs', nargs="?", type=int, help='number of epochs you want to train the dataset on')
     parser.add_argument('--label', nargs="?", type=int, help='anomalous label for the experiment')
     parser.add_argument('--w', nargs="?", type=float, help='weight for the sum of the mapping loss function')
     parser.add_argument('--m', nargs="?", choices=['cross-e', 'fm'], help='mode/method for discriminator loss')
-    parser.add_argument('--z', nargs="?", type=int, help='number of initializations for he gan')
     parser.add_argument('--d', nargs="?", type=int, help='degree for the L norm')
     parser.add_argument('--rd', nargs="?", type=int, help='random_seed')
 

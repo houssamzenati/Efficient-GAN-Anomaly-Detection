@@ -19,9 +19,6 @@ def generator(z_inp, is_training=False, getter=None, reuse=False):
 
     Generates data from the latent space
 
-    Note:
-        Provides histogram and distribution tensorflow summaries
-
     Args:
         z_inp (tensor): variable in the latent space
         reuse (bool): sharing variables or not
@@ -42,7 +39,6 @@ def generator(z_inp, is_training=False, getter=None, reuse=False):
                                         training=is_training,
                                         name='batch_normalization')
             net = tf.nn.relu(net, name='relu')
-            make_histogram_summary(net, init_layer=True)
 
         name_net = 'layer_2'
         with tf.variable_scope(name_net):
@@ -54,7 +50,6 @@ def generator(z_inp, is_training=False, getter=None, reuse=False):
                                         training=is_training,
                                         name='batch_normalization')
             net = tf.nn.relu(net, name='relu')
-            make_histogram_summary(net)
 
         net = tf.reshape(net, [-1, 7, 7, 128])
 
@@ -71,7 +66,6 @@ def generator(z_inp, is_training=False, getter=None, reuse=False):
                                         training=is_training,
                                         name='batch_normalization')
             net = tf.nn.relu(net, name='relu')
-            make_histogram_summary(net)
 
         name_net = 'layer_4'
         with tf.variable_scope(name_net):
@@ -83,9 +77,6 @@ def generator(z_inp, is_training=False, getter=None, reuse=False):
                                      kernel_initializer=init_kernel,
                                      name='conv')
             net = tf.tanh(net, name='tanh')
-            make_histogram_summary(net)
-
-        generator_sum = tf.summary.merge_all('generator')
 
         return net
 
@@ -93,9 +84,6 @@ def discriminator(x_inp, is_training=False, getter=None, reuse=False):
     """ Discriminator architecture in tensorflow
 
     Discriminates between real data and generated data
-
-    Note:
-        Provides histogram and distribution tensorflow summaries
 
     Args:
         x_inp (tensor): input data for the encoder.
@@ -118,7 +106,6 @@ def discriminator(x_inp, is_training=False, getter=None, reuse=False):
                            kernel_initializer=init_kernel,
                            name='conv')
             net = leakyReLu(net, 0.1, name='leaky_relu')
-            make_histogram_summary(net, init_layer=True)
 
         name_net = 'layer_2'
         with tf.variable_scope(name_net):
@@ -133,7 +120,6 @@ def discriminator(x_inp, is_training=False, getter=None, reuse=False):
                                         training=is_training,
                                         name='batch_normalization')
             net = leakyReLu(net, 0.1, name='leaky_relu')
-            make_histogram_summary(net)
 
         net = tf.reshape(net, [-1, 7 * 7 * 64])
 
@@ -147,7 +133,6 @@ def discriminator(x_inp, is_training=False, getter=None, reuse=False):
                                     training=is_training,
                                     name='batch_normalization')
             net = leakyReLu(net, 0.1, name='leaky_relu')
-            make_histogram_summary(net)
 
         intermediate_layer = net
 
@@ -158,29 +143,9 @@ def discriminator(x_inp, is_training=False, getter=None, reuse=False):
                                   kernel_initializer=init_kernel,
                                   name='fc')
 
-            make_histogram_summary(net)
-
         net = tf.squeeze(net)
 
-        discriminator_sum = tf.summary.merge_all('discriminator')
-
         return net, intermediate_layer
-
-def make_histogram_summary(net, init_layer=False):
-    """ Does the histogram summaries in tensorboard"""
-    global layer
-    if init_layer:
-        layer = 1
-    scope = tf.get_variable_scope().name
-    name_model = scope.split('/')[0]
-    net_vars = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, scope)
-    tf.summary.histogram('{}/kernel_{}'.format(scope, layer),
-                         net_vars[0], [name_model])
-    tf.summary.histogram('{}/bias_{}'.format(scope, layer),
-                         net_vars[1], [name_model])
-    tf.summary.histogram('{}/act_{}'.format(scope, layer),
-                         net, [name_model])
-    layer += 1
 
 def leakyReLu(x, alpha=0.1, name=None):
     if name:

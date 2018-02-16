@@ -19,9 +19,6 @@ def encoder(x_inp, is_training=False, getter=None, reuse=False):
 
     Maps the data into the latent space
 
-    Note:
-        Provides histogram and distribution tensorflow summaries
-
     Args:
         x_inp (tensor): input data for the encoder.
         reuse (bool): sharing variables or not
@@ -40,7 +37,6 @@ def encoder(x_inp, is_training=False, getter=None, reuse=False):
                               kernel_initializer=init_kernel,
                               name='fc')
             net = leakyReLu(net)
-            make_histogram_summary(net, init_layer=True)
 
         name_net = 'layer_2'
         with tf.variable_scope(name_net):
@@ -48,9 +44,6 @@ def encoder(x_inp, is_training=False, getter=None, reuse=False):
                               units=latent_dim,
                               kernel_initializer=init_kernel,
                               name='fc')
-            make_histogram_summary(net)
-
-    enc_sum = tf.summary.merge_all('encoder')
 
     return net
 
@@ -58,9 +51,6 @@ def decoder(z_inp, is_training=False, getter=None, reuse=False):
     """ Decoder architecture in tensorflow
 
     Generates data from the latent space
-
-    Note:
-        Provides histogram and distribution tensorflow summaries
 
     Args:
         z_inp (tensor): variable in the latent space
@@ -78,7 +68,6 @@ def decoder(z_inp, is_training=False, getter=None, reuse=False):
                                   kernel_initializer=init_kernel,
                                   name='fc')
             net = tf.nn.relu(net)
-            make_histogram_summary(net, init_layer=True)
 
         name_net = 'layer_2'
         with tf.variable_scope(name_net):
@@ -87,7 +76,6 @@ def decoder(z_inp, is_training=False, getter=None, reuse=False):
                                   kernel_initializer=init_kernel,
                                   name='fc')
             net = tf.nn.relu(net)
-            make_histogram_summary(net)
 
         name_net = 'layer_3'
         with tf.variable_scope(name_net):
@@ -95,9 +83,6 @@ def decoder(z_inp, is_training=False, getter=None, reuse=False):
                                   units=121,
                                   kernel_initializer=init_kernel,
                                   name='fc')
-            make_histogram_summary(net)
-
-    gen_sum = tf.summary.merge_all('generator')
 
     return net
 
@@ -105,9 +90,6 @@ def discriminator(z_inp, x_inp, is_training=False, getter=None, reuse=False):
     """ Discriminator architecture in tensorflow
 
     Discriminates between pairs (E(x), x) and (z, G(z))
-
-    Note:
-        Provides histogram and distribution tensorflow summaries
 
     Args:
         z_inp (tensor): variable in the latent space
@@ -129,7 +111,6 @@ def discriminator(z_inp, x_inp, is_training=False, getter=None, reuse=False):
                           name='fc')
             x = leakyReLu(x)
             x = tf.layers.dropout(x, rate=0.2, name='dropout', training=is_training)
-            make_histogram_summary(x, init_layer=True)
 
         # D(z)
         name_z = 'z_fc_1'
@@ -137,7 +118,6 @@ def discriminator(z_inp, x_inp, is_training=False, getter=None, reuse=False):
             z = tf.layers.dense(z_inp, 128, kernel_initializer=init_kernel)
             z = leakyReLu(z)
             z = tf.layers.dropout(z, rate=0.2, name='dropout', training=is_training)
-            make_histogram_summary(z)
 
         # D(x,z)
         y = tf.concat([x, z], axis=1)
@@ -149,7 +129,6 @@ def discriminator(z_inp, x_inp, is_training=False, getter=None, reuse=False):
                                 kernel_initializer=init_kernel)
             y = leakyReLu(y)
             y = tf.layers.dropout(y, rate=0.2, name='dropout', training=is_training)
-            make_histogram_summary(y)
 
         intermediate_layer = y
 
@@ -158,27 +137,9 @@ def discriminator(z_inp, x_inp, is_training=False, getter=None, reuse=False):
             logits = tf.layers.dense(y,
                                      1,
                                      kernel_initializer=init_kernel)
-            make_histogram_summary(logits)
-
-    dis_sum = tf.summary.merge_all('discriminator')
 
     return logits, intermediate_layer
 
-def make_histogram_summary(net, init_layer=False):
-    """ Does the histogram summaries in tensorboard"""
-    global layer
-    if init_layer:
-        layer = 1
-    scope = tf.get_variable_scope().name
-    name_model = scope.split('/')[0]
-    net_vars = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, scope)
-    tf.summary.histogram('{}/kernel_{}'.format(scope.split('/')[-1], layer),
-                         net_vars[0], [name_model])
-    tf.summary.histogram('{}/bias_{}'.format(scope.split('/')[-1], layer),
-                         net_vars[1], [name_model])
-    tf.summary.histogram('{}/act_{}'.format(scope.split('/')[-1], layer),
-                         net, [name_model])
-    layer += 1
 
 def leakyReLu(x, alpha=0.1, name='leaky_relu'):
     """ Leaky relu """

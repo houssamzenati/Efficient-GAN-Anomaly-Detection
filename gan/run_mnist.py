@@ -278,11 +278,8 @@ def train_and_test(nb_epochs, weight, method, degree, random_seed, label):
         scores = []
         inference_time = []
 
-        # validation
+        # testing
         for t in range(nr_batches_test):
-            # print("Validation batch {} is inverted...".format(t))
-            # display_progression_epoch(t, nr_batches_valid)
-
             # construct randomly permuted minibatches
             ran_from = t * batch_size
             ran_to = (t + 1) * batch_size
@@ -316,21 +313,15 @@ def train_and_test(nb_epochs, weight, method, degree, random_seed, label):
 
         scores += batch_score[:size]
 
-        roc_auc, _ = do_roc(scores, testy,
-               file_name=r'gan/mnist/{}/{}/{}'.format(method, weight,
-                                                     label),
-               directory=r'results/gan/mnist/{}/{}/'.format(method,
-                                                           weight))
-        prc_auc, _, _, _, _ = do_prc(scores, testy,
+        prc_auc = do_prc(scores, testy,
                file_name=r'gan/mnist/{}/{}/{}'.format(method, weight,
                                                      label),
                directory=r'results/gan/mnist/{}/{}/'.format(method,
                                                            weight))
 
-        print("Testing | ROC AUC = {:.4f} | PRC AUC = {:.4f}".format(roc_auc,
-                                                                     prc_auc))
+        print("Testing | PRC AUC = {:.4f}".format(prc_auc))
 
-def run(nb_epochs, weight, method, degree, label, number_init_z, random_seed=42):
+def run(nb_epochs, weight, method, degree, label, random_seed=42):
     """ Runs the training process"""
     with tf.Graph().as_default():
         # Set the graph level seed
