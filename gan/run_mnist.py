@@ -6,7 +6,7 @@ import importlib
 import sys
 import gan.mnist_utilities as network
 import data.mnist as data
-from utils.evaluations import do_prc, do_roc
+from utils.evaluations import do_prc
 from sklearn.metrics import precision_recall_fscore_support
 
 

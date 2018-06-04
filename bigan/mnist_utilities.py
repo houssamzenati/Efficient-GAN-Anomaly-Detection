@@ -172,7 +172,8 @@ def discriminator(z_inp, x_inp, is_training=False, getter=None, reuse=False):
                            kernel_initializer=init_kernel,
                            name='conv')
             x = leakyReLu(x, 0.1, name='leaky_relu')
-            x = tf.layers.dropout(x, rate=0.5, name='dropout')
+            x = tf.layers.dropout(x, rate=0.5, name='dropout',
+                                  training=is_training)
 
         name_net = 'x_layer_2'
         with tf.variable_scope(name_net):
@@ -187,7 +188,8 @@ def discriminator(z_inp, x_inp, is_training=False, getter=None, reuse=False):
                                         training=is_training,
                                         name='batch_normalization')
             x = leakyReLu(x, 0.1, name='leaky_relu')
-            x = tf.layers.dropout(x, rate=0.5, name='dropout')
+            x = tf.layers.dropout(x, rate=0.5, name='dropout',
+                                  training=is_training)
 
         x = tf.reshape(x, [-1, 7 * 7 * 64])
 
@@ -199,7 +201,8 @@ def discriminator(z_inp, x_inp, is_training=False, getter=None, reuse=False):
                                 kernel_initializer=init_kernel,
                                 name='fc')
             z = leakyReLu(z, name='leaky_relu')
-            z = tf.layers.dropout(z, rate=0.5, name='dropout')
+            z = tf.layers.dropout(z, rate=0.5, name='dropout',
+                                  training=is_training)
 
         # D(x,z)
         y = tf.concat([x, z], axis=1)
@@ -211,7 +214,8 @@ def discriminator(z_inp, x_inp, is_training=False, getter=None, reuse=False):
                                 kernel_initializer=init_kernel,
                                 name='fc')
             y = leakyReLu(y, name='leaky_relu')
-            y = tf.layers.dropout(y, rate=0.5, name='dropout')
+            y = tf.layers.dropout(y, rate=0.5, name='dropout',
+                                  training=is_training)
 
         intermediate_layer = y
 

@@ -6,7 +6,7 @@ import importlib
 import sys
 import bigan.mnist_utilities as network
 import data.mnist as data
-from utils.evaluations import do_prc, do_roc
+from utils.evaluations import do_prc
 
 RANDOM_SEED = 13
 FREQ_PRINT = 20 # print frequency image tensorboard [20]
