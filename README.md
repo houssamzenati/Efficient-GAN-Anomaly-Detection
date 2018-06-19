@@ -1,6 +1,23 @@
-# Anomaly-Detection
+#  Efficient-GAN-Based Anomaly Detection
 
+Official implementation of the prepublished article submitted to the ICLRW 2018: https://arxiv.org/abs/1802.06222
 Anomaly Detection materials, by the Deep Learning 2.0 team in I2R, A*STAR, Singapore
+
+Please reach us via emails or via github issues for any enquiries!
+
+Please cite our work if you find it useful for your research and work:
+
+@article{zenati2018,
+  author    = {Houssam Zenati and
+               Chuan Sheng Foo and
+               Bruno Lecouat and
+               Gaurav Manek and
+               Vijay Ramaseshan Chandrasekhar},
+  title     = {Efficient GAN-Based Anomaly Detection},
+  year      = {2018},
+  url       = {http://arxiv.org/abs/1802.06222},
+  archivePrefix = {arXiv},
+}
 
 ## Prerequisites.
 To run the code, follow those steps:
@@ -28,3 +45,4 @@ Running the code with different options
 ```
 python3 main.py <gan, bigan> <mnist, kdd> run --nb_epochs=<number_epochs> --label=<0, 1, 2, 3, 4, 5, 6, 7, 8, 9> --w=<float between 0 and 1> --m=<'cross-e','fm'> --d=<int> --rd=<int>
 ```
+
