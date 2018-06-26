@@ -62,9 +62,9 @@ if __name__ == "__main__":
     parser.add_argument('split', nargs="?", choices=['run'], help='train the example or evaluate it')
     parser.add_argument('--nb_epochs', nargs="?", type=int, help='number of epochs you want to train the dataset on')
     parser.add_argument('--label', nargs="?", type=int, help='anomalous label for the experiment')
-    parser.add_argument('--w', nargs="?", type=float, help='weight for the sum of the mapping loss function')
-    parser.add_argument('--m', nargs="?", choices=['cross-e', 'fm'], help='mode/method for discriminator loss')
-    parser.add_argument('--d', nargs="?", type=int, help='degree for the L norm')
-    parser.add_argument('--rd', nargs="?", type=int, help='random_seed')
+    parser.add_argument('--w', nargs="?", default=0.1, type=float, help='weight for the sum of the mapping loss function')
+    parser.add_argument('--m', nargs="?", default='fm', choices=['cross-e', 'fm'], help='mode/method for discriminator loss')
+    parser.add_argument('--d', nargs="?", default=1, defaulttype=int, help='degree for the L norm')
+    parser.add_argument('--rd', nargs="?", default=42, type=int, help='random_seed')
 
     run(parser.parse_args())
