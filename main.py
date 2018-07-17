@@ -64,7 +64,7 @@ if __name__ == "__main__":
     parser.add_argument('--label', nargs="?", type=int, help='anomalous label for the experiment')
     parser.add_argument('--w', nargs="?", default=0.1, type=float, help='weight for the sum of the mapping loss function')
     parser.add_argument('--m', nargs="?", default='fm', choices=['cross-e', 'fm'], help='mode/method for discriminator loss')
-    parser.add_argument('--d', nargs="?", default=1, defaulttype=int, help='degree for the L norm')
+    parser.add_argument('--d', nargs="?", default=1, type=int, help='degree for the L norm')
     parser.add_argument('--rd', nargs="?", default=42, type=int, help='random_seed')
 
     run(parser.parse_args())
