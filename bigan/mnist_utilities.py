@@ -38,6 +38,7 @@ def encoder(x_inp, is_training=False, getter=None, reuse=False):
                                    padding='SAME',
                                    kernel_initializer=init_kernel,
                                    name='conv')
+            net = leakyReLu(net, name='leaky_relu')
 
         name_net = 'layer_2'
         with tf.variable_scope(name_net):
