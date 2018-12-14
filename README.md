@@ -19,6 +19,8 @@ Please cite our work if you find it useful for your research and work:
   archivePrefix = {arXiv}
 }
 
+New! Updated version of this work in ["Adversarially Learned Anomaly Detection" paper](https://arxiv.org/abs/1812.02288)!
+
 ## Prerequisites.
 To run the code, follow those steps:
 
