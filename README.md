@@ -6,7 +6,7 @@ Anomaly Detection materials, by the Deep Learning 2.0 team in I2R, A*STAR, Singa
 Please reach us via emails or via github issues for any enquiries!
 
 Please cite our work if you find it useful for your research and work:
-
+```
 @article{zenati2018,
   author    = {Houssam Zenati and
                Chuan Sheng Foo and
@@ -18,7 +18,7 @@ Please cite our work if you find it useful for your research and work:
   url       = {http://arxiv.org/abs/1802.06222},
   archivePrefix = {arXiv}
 }
-
+```)
 New! Updated version of this work in ["Adversarially Learned Anomaly Detection" paper](https://arxiv.org/abs/1812.02288)!
 
 ## Prerequisites.
