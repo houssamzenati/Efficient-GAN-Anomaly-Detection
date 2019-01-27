@@ -18,7 +18,7 @@ Please cite our work if you find it useful for your research and work:
   url       = {http://arxiv.org/abs/1802.06222},
   archivePrefix = {arXiv}
 }
-```)
+```
 New! Updated version of this work in ["Adversarially Learned Anomaly Detection" paper](https://arxiv.org/abs/1812.02288)!
 
 ## Prerequisites.
