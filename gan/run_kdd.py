@@ -9,7 +9,7 @@ import data.kdd as data
 from sklearn.metrics import precision_recall_fscore_support
 
 
-RANDOM_SEED = 146
+RANDOM_SEED =  146
 FREQ_PRINT = 20 # print frequency image tensorboard [20]
 STEPS_NUMBER = 500
 
