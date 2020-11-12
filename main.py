@@ -58,7 +58,7 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description='Run examples from the DL 2.0 Anomaly Detector.')
     parser.add_argument('example', nargs="?", type=path, help='the folder name of the example you want to run e.g gan or bigan')
-    parser.add_argument('dataset', nargs="?", choices=['mnist', 'kdd'], help='the name of the dataset you want to run the experiments on')
+    parser.add_argument('dataset', nargs="?", choices=['mnist','cifar', 'kdd'], help='the name of the dataset you want to run the experiments on')
     parser.add_argument('split', nargs="?", choices=['run'], help='train the example or evaluate it')
     parser.add_argument('--nb_epochs', nargs="?", type=int, help='number of epochs you want to train the dataset on')
     parser.add_argument('--label', nargs="?", type=int, help='anomalous label for the experiment')
